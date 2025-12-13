@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/src/">
+    <Project Path="src/RentCarServer.Application/RentCarServer.Application.csproj" />
     <Project Path="src/RentCarServer.Domain/RentCarServer.Domain.csproj" />
   </Folder>
 </Solution>
