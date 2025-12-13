@@ -4,7 +4,7 @@ using RentCarServer.Application.Services;
 
 namespace RentCarServer.Infrastructure.Services;
 
-internal class UserContext(HttpContextAccessor httpContextAccessor) : IUserContext
+internal class UserContext(IHttpContextAccessor httpContextAccessor) : IUserContext
 {
     public Guid GetUserId()
     {
