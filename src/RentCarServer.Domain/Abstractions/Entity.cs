@@ -1,0 +1,36 @@
+﻿namespace RentCarServer.Domain.Abstractions;
+
+public abstract class Entity
+{
+    public IdentityId Id { get; private set; }
+    public bool IsActive { get; private set; }
+    public DateTimeOffset CreatedAt { get; private set; }
+    public IdentityId CreateBy { get; private set; } = default!;
+    public DateTimeOffset? UpdatedAt { get; private set; }
+    public IdentityId? UpdatedBy { get; private set; }
+    public bool IsDeleted { get; private set; }
+    public DateTimeOffset? DeletedAt { get; private set; }
+    public IdentityId? DeletedBy { get; private set; }
+
+    protected Entity()
+    {
+        Id = new IdentityId(Guid.CreateVersion7());
+        IsActive = true;
+    }
+
+    public void SetStatus(bool isActive)
+    {
+        IsActive = isActive;
+    }
+
+    public void Delete(bool isDeleted)
+    {
+        IsDeleted = true;
+    }
+}
+
+public sealed record IdentityId(Guid value)
+{
+    public static implicit operator Guid(IdentityId id) => id.value;
+    public static implicit operator string(IdentityId id) => id.value.ToString();
+}
