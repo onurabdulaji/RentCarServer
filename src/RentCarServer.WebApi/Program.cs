@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.RateLimiting;
 using RentCarServer.Application;
 using RentCarServer.Infrastructure;
 using RentCarServer.WebApi;
+using RentCarServer.WebApi.Modules;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -54,6 +55,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers().RequireRateLimiting("fixed");
+
+app.MapAuth();
 
 //await app.CreateFirstUser();
 
