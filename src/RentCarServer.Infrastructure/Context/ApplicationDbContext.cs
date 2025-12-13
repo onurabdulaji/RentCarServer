@@ -3,14 +3,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentCarServer.Domain.Abstractions;
 using System.Security.Claims;
+using GenericRepository;
+using RentCarServer.Domain.Users;
 
 namespace RentCarServer.Infrastructure.Context;
 
-internal class ApplicationDbContext : DbContext
+internal class ApplicationDbContext : DbContext , IUnitOfWork
 {
     public ApplicationDbContext(DbContextOptions options) : base(options)
     {
     }
+
+    public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
