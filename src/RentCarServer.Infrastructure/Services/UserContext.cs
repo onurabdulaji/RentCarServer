@@ -10,6 +10,11 @@ internal class UserContext(IHttpContextAccessor httpContextAccessor) : IUserCont
     {
         var httpContext = httpContextAccessor.HttpContext;
 
+        if (httpContext is null)
+        {
+            throw new ArgumentNullException("Kontext Bilgisi Bulunamadi");
+        }
+
         var claims = httpContext.User.Claims;
 
         string? userId = claims.FirstOrDefault(q => q.Type == ClaimTypes.NameIdentifier)?.Value;
