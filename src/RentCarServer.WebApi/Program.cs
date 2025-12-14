@@ -36,6 +36,8 @@ builder.Services.AddCors();
 
 builder.Services.AddOpenApi();
 
+builder.Services.AddExceptionHandler<ExceptionHandler>().AddProblemDetails();
+
 var app = builder.Build();
 
 app.MapOpenApi();
@@ -49,6 +51,7 @@ app.UseCors(opt =>
     opt.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod().SetPreflightMaxAge(TimeSpan.FromMinutes(10));
 });
 
+app.UseExceptionHandler();
 
 app.UseAuthentication();
 
