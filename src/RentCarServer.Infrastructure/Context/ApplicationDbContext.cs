@@ -36,15 +36,19 @@ internal class ApplicationDbContext : DbContext , IUnitOfWork
         var entries = ChangeTracker.Entries<Entity>();
 
         HttpContextAccessor httpContextAccessor = new();
-        string userIdString =
+        string? userIdString =
         httpContextAccessor
             .HttpContext!
             .User
             .Claims
-            .First(p => p.Type == ClaimTypes.NameIdentifier)
+            .FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?
             .Value;
 
-        Guid userId = Guid.Parse(userIdString);
+        if (userIdString is null)
+        {
+            return base.SaveChangesAsync(cancellationToken);
+        }
+            Guid userId = Guid.Parse(userIdString);
         IdentityId identityId = new(userId);
 
         foreach (var entry in entries)
