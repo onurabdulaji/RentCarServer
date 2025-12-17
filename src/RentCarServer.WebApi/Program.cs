@@ -57,9 +57,11 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.MapControllers().RequireRateLimiting("fixed");
+app.MapControllers().RequireRateLimiting("fixed").RequireAuthorization();
 
 app.MapAuth();
+
+app.MapGet("/", () => "Hello World").RequireAuthorization();
 
 //await app.CreateFirstUser();
 
