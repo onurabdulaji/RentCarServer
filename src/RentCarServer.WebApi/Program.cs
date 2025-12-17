@@ -86,7 +86,7 @@ app.MapControllers().RequireRateLimiting("fixed").RequireAuthorization();
 
 app.MapAuth();
 
-app.MapGet("/", () => "Hello World").RequireAuthorization();
+app.MapGet("/", () => "Hello World");
 
 //await app.CreateFirstUser();
 
