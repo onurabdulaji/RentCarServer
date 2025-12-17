@@ -46,6 +46,11 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddExceptionHandler<ExceptionHandler>().AddProblemDetails();
 
+builder.Services.AddResponseCompression(options =>
+{
+    options.EnableForHttps = true;
+});
+
 var app = builder.Build();
 
 app.MapOpenApi();
@@ -58,6 +63,8 @@ app.UseCors(opt =>
 {
     opt.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod().SetPreflightMaxAge(TimeSpan.FromMinutes(10));
 });
+
+app.UseRequestDecompression();
 
 app.UseAuthentication();
 
