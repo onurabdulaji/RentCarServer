@@ -28,6 +28,14 @@ builder.Services.AddRateLimiter(cfg =>
         opt.Window = TimeSpan.FromMinutes(1);
         opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
     });
+
+    cfg.AddFixedWindowLimiter("forgot-password-fixed", opt =>
+    {
+        opt.PermitLimit = 2;
+        //opt.QueueLimit = 1;
+        opt.Window = TimeSpan.FromMinutes(5);
+        opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+    });
 });
 
 builder.Services.AddControllers().AddOData(opt =>
@@ -64,7 +72,7 @@ app.UseCors(opt =>
     opt.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod().SetPreflightMaxAge(TimeSpan.FromMinutes(10));
 });
 
-app.UseRequestDecompression();
+app.UseResponseCompression();
 
 app.UseAuthentication();
 
